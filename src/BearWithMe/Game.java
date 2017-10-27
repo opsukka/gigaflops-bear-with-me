@@ -27,8 +27,8 @@ public class Game extends Canvas implements Runnable {
 	private static JFrame frame = new JFrame();
 	public static final int WIDTH = 640;
 	public static final int HEIGHT = WIDTH / 4 * 3;
-	public static final String VERSION = "Alpha 0.1.0";
-	public static final String TITLE = "Zombocity" + VERSION;
+	public static final String VERSION = "0.2.0";
+	public static final String TITLE = "BearWithMe" + VERSION;
 	private static Game game = new Game();
 	public static GameState state = GameState.MENU;
 
