@@ -1,61 +1,68 @@
 package BearWithMe.input;
 
-import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import BearWithMe.Game;
-import BearWithMe.enums.GameState;
-import BearWithMe.libs.Audio;
-import BearWithMe.screens.Menu;
-
 public class MouseInput extends MouseAdapter {
 
-	public static int MOUSE_X, MOUSE_Y;
-	public static Rectangle MOUSE = new Rectangle(1, 1, 1, 1);
+    private static final int       NUM_BUTTONS = 10;
 
-	
-	@Override
-	public void mouseClicked(MouseEvent e) {
-		int mouse = e.getButton();
-		Rectangle rect = new Rectangle(e.getX(), e.getY(), 1, 1);
+    private static final boolean[] buttons     = new boolean[NUM_BUTTONS];
+    private static final boolean[] lastButtons = new boolean[NUM_BUTTONS];
+    private static int             x           = -1, y = -1;
+    public static int              lastX       = x, lastY = y;
+    private static boolean         moving;
 
-		if (mouse == MouseEvent.BUTTON1) {
-			switch (Game.state) {
-			case GAME:
-				break;
-			case MENU:
-				if (rect.intersects(Menu.play)) {
-					Game.state = GameState.GAME;
-				} else if (rect.intersects(Menu.options)) {
+    @Override
+    public void mousePressed(MouseEvent e) {
+        buttons[e.getButton()] = true;
+    }
 
-				} else if (rect.intersects(Menu.quit)) {
-					System.exit(1);
-				}
-				break;
-			case OPTIONS:
-				break;
-			case PAUSE:
-				break;
-			default:
-				break;
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        buttons[e.getButton()] = false;
+    }
 
-			}
-		}
-	}
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        x = e.getX();
+        y = e.getY();
+        moving = true;
+    }
 
-	@Override
-	public void mouseMoved(MouseEvent e) {
-		MOUSE_X = e.getX();
-		MOUSE_Y = e.getY();
+    public static void update() {
+        for (int i = 0; i < NUM_BUTTONS; i++)
+            lastButtons[i] = buttons[i];
 
-		MOUSE = new Rectangle(MOUSE_X, MOUSE_Y, 1, 1);
-	}
+        //TODO: Do we need to check for how long the mouse has been still?
+        //i.e, only set moving to false when the mouse has been static for 5 seconds (5x60 ticks)
+        if (x == lastX && y == lastY) moving = false;
+        lastX = x;
+        lastY = y;
+    }
 
-	@Override
-	public void mousePressed(MouseEvent e) {
-		if (MOUSE.intersects(Menu.quit)) {
+    public static boolean isDown(int button) {
+        return buttons[button];
+    }
 
-		}
-	}
+    public static boolean wasPressed(int button) {
+        return isDown(button) && !lastButtons[button];
+    }
+
+    public static boolean wasReleased(int button) {
+        return !isDown(button) && lastButtons[button];
+    }
+
+    public static int getX() {
+        return x;
+    }
+
+    public static int getY() {
+        return y;
+    }
+
+    public static boolean isMoving() {
+        return moving;
+    }
+
 }
