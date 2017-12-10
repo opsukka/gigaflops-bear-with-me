@@ -36,5 +36,8 @@ public class GameState implements State {
     public String getName() {
         return "level1";
     }
+    public String getMenu() {
+    	return "option2";
+    }
 
 }

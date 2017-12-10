@@ -10,11 +10,15 @@ import BearWithMe.input.KeyInput;
 import BearWithMe.input.MouseInput;
 import BearWithMe.states.GameState;
 import BearWithMe.states.MenuState;
+import BearWithMe.states.OptionState;
 import BearWithMe.states.StateManager;
 
 public class Game extends Canvas implements Runnable {
 
     public static final String  TITLE  = "Bear With Me";
+    public static final String INSTRUCT_1 = "D = Forward";
+    public static final String INSTRUCT_2 = "A = Backward";
+    public static final String INSTRUCT_3 = "W = Jump";
     public static final int     WIDTH  = 640;
     public static final int     HEIGHT = WIDTH / 4 * 3;
     public static final boolean DEBUG  = false;
@@ -33,6 +37,7 @@ public class Game extends Canvas implements Runnable {
         stateManager = new StateManager();
 
         stateManager.addState(new MenuState());
+        stateManager.addState(new OptionState());
         stateManager.addState(new GameState());
 
         INSTANCE = this;

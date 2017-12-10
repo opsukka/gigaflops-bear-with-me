@@ -66,6 +66,7 @@ public class TileMap {
         int mapHeight = tilesToPixels(height);
         int offsetX = (int) (screenWidth / 2 - player.getX() - TILE_SIZE / 2);
         int offsetY = (int) (screenHeight / 2 - player.getY() - TILE_SIZE / 2);
+        
         offsetX = Math.min(offsetX, 0);
         offsetX = Math.max(offsetX, screenWidth - mapWidth);
         offsetY = Math.min(offsetY, 0);
@@ -149,6 +150,8 @@ public class TileMap {
                 int id = pixels[x + y * width];
                 if (id == 0xFF0000FF)
                     player = new Player(tilesToPixels(x), tilesToPixels(y), this);
+                if (id == 0xFFFFFF00)
+                	karhu = new Karhu(tilesToPixels(x), tilesToPixels(y), this);
                 else if (Tile.getFromID(id) != null)
                     setTile(x, y, Tile.getFromID(id));
             }
@@ -157,10 +160,12 @@ public class TileMap {
 
     public void addEntity(Entity e) {
         if (!(e instanceof Player)) entities.add(e);
+        if (!(e instanceof Karhu)) entities.add(e);
     }
 
     public void removeEntity(Entity e) {
         if (!(e instanceof Player)) entities.remove(e);
+        if (!(e instanceof Karhu)) entities.remove(e);
     }
 
     public ArrayList<Entity> getEntities() {
@@ -169,5 +174,8 @@ public class TileMap {
 
     public Player getPlayer() {
         return player;
+    }
+    public Karhu getKarhu() {
+    	return karhu;
     }
 }

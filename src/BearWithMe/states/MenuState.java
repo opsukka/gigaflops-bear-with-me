@@ -24,7 +24,7 @@ public class MenuState implements State {
         options[0] = new Button("Play", 200 + 0 * 80,
                 new Font("Arial", Font.PLAIN, 32), new Font("Arial", Font.BOLD, 48),
                 Color.WHITE, Color.YELLOW);
-        options[1] = new Button("Options", 200 + 1 * 80,
+        options[1] = new Button("Instructions", 200 + 1 * 80,
                 new Font("Arial", Font.PLAIN, 32), new Font("Arial", Font.BOLD, 48),
                 Color.WHITE, Color.YELLOW);
         options[2] = new Button("Exit", 200 + 2 * 80,
@@ -66,7 +66,7 @@ public class MenuState implements State {
                 stateManager.setState("level1");
                 break;
             case 1:
-                stateManager.setState("option2");
+                stateManager.setState("menu2");
                 break;
             case 2:
                 System.out.println("Exit");
@@ -95,5 +95,4 @@ public class MenuState implements State {
     public String getName() {
         return "menu";
     }
-
 }
